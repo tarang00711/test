@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Management System</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-title">Student Dashboard</div>
+      <ul>
+        <li><button onclick="switchTab('students');">Students</button></li>
+        <li><button onclick="switchTab('attendance');">Attendance</button></li>
+        <li><button onclick="switchTab('marks');">Marks</button></li>
+        <li><button onclick="sortStudents();">Sort A-Z</button></li>
+        <li><button onclick="exportCSV();">Download CSV</button></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <header class="topnav">
+        <div class="topnav-left">
+          <h1>🎓 Student Management System</h1>
+          <p class="subtitle">Manage students, attendance, and reports</p>
+        </div>
+        <div class="topnav-right">
+          <button id="darkModeToggle" class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+          <button class="logout-btn" onclick="handleLogout()">Logout</button>
+        </div>
+      </header>
+
+      <section class="container">
+        <h3>Total Students: <span id="count">0</span></h3>
+
+        <div class="card">
+          <div class="form-row">
+            <input type="text" id="name" placeholder="Name">
+            <input type="text" id="roll" placeholder="Roll No">
+          </div>
+      <div class="form-row">
+        <input type="text" id="course" placeholder="Class / Course">
+        <input type="number" id="age" placeholder="Age" min="1" max="100">
+      </div>
+      <div class="form-row">
+        <input type="email" id="email" placeholder="Email">
+        <input type="tel" id="phone" placeholder="Phone">
+      </div>
+      <button class="save-btn" onclick="addStudent()">Save Student</button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="students" onclick="switchTab('students')">📋 Students</button>
+      <button class="tab-btn" data-tab="attendance" onclick="switchTab('attendance')">📅 Attendance</button>
+      <button class="tab-btn" data-tab="marks" onclick="switchTab('marks')">📝 Marks</button>
+    </div>
+
+    <div id="studentsSection" class="tab-content active">
+      <input type="text" id="search" placeholder="Search..." onkeyup="render()">
+      <br>
+      <button class="sort-btn" onclick="sortStudents()">Sort A-Z</button>
+      <button onclick="exportCSV()">Download CSV</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Roll</th>
+          <th>Class</th>
+          <th>Age</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Attendance %</th>
+          <th>CGPA</th>
+          <th>Date & Time</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    </div>
+
+    <div id="attendanceSection" class="tab-content">
+      <div class="attendance-header">
+        <h3>Mark Attendance - <span id="attendanceDate"></span></h3>
+        <button class="btn-primary" onclick="markAllPresent()">Mark All Present</button>
+      </div>
+      <table class="attendance-table">
+        <thead>
+          <tr>
+            <th>Roll No</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="attendanceBody"></tbody>
+      </table>
+    </div>
+
+    <div id="marksSection" class="tab-content">
+      <div class="card">
+        <div class="form-row">
+          <select id="studentSelect">
+            <option value="">Select Student</option>
+          </select>
+          <input type="text" id="subject" placeholder="Subject">
+        </div>
+        <div class="form-row">
+          <input type="number" id="marks" placeholder="Marks" min="0" max="100">
+          <button id="addMarksBtn" class="save-btn" onclick="addMarksForStudent()">Add Marks</button>
+        </div>
+        <div class="small-note">Max 5 subjects per student; each mark out of 100.</div>
+      </div>
+      <table class="attendance-table">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Subject</th>
+            <th>Marks</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="marksBody"></tbody>
+      </table>
+    </div>
+
+    </section>
+  </main>
+</div>
+
+<script src="script.js"></script>
+<div id="toast"></div>
+</html>
